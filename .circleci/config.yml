@@ -1,5 +1,21 @@
 version: 2.1
 
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+      WorkflowID:
+        description: "Work flow ID from the pipeline job"
+        type: string
+        default: "${CIRCLE_WORKFLOW_ID:0:7}"    
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name "udapeople-frontend-${workflow-id:0:7}"
+            aws cloudformation delete-stack --stack-name "udapeople-backend-${workflow-id:0:7}"
+
 jobs:
   build-frontend:
     docker:
@@ -121,6 +137,30 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
+
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          # You can get this ID in the section where you registered the SSH Key
+            fingerprints: ["e4:62:51:ab:ea:81:ff:49:f8:15:a2:23:a3:d5:50:c4"]
+      # attach workspace
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            apk add tar gzip awscli
+
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible ansible-playbook -i inventory.txt configure-server.yml
+      # Here's where you will add some code to rollback on failure      
+
           
 
 workflows:
@@ -141,3 +181,5 @@ workflows:
           filters:
             branches:
               only: [master]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
