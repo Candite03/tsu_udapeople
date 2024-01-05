@@ -196,6 +196,7 @@ jobs:
             yum update -y
             #yum install python3 -y
             yum install tar -y
+            yum install gzip -y
             yum install wget -y
             cd ~
             wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
