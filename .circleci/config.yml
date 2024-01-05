@@ -190,8 +190,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -200,7 +198,9 @@ jobs:
             yum install ansible -y
             yum install epel-release -y
             yum install nodejs -y
-
+            yum install tar -y
+      - attach_workspace:
+          at: ~/
       - run:
           name: Get backend url
           command: |
