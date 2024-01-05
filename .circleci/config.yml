@@ -194,7 +194,8 @@ jobs:
           name: Install dependencies
           command: |
             yum update -y
-            yum install python3 -y
+            #yum install python3 -y
+            amazon-linux-extras enable epel
             yum install epel-release -y
             yum install nodejs -y
             yum install tar -y
