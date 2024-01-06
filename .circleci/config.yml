@@ -279,7 +279,7 @@ jobs:
           command: |
             yum update
             yum install curl
-            yum install tar
+            yum install tar -y
       - attach_workspace:
           at: ~/
       - run:
