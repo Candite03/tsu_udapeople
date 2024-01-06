@@ -1,8 +1,4 @@
 ---
-- name: Update packages
-  ansible.builtin.apt:
-    update_cache: yes
-
 - name: Extract back-end tar
   ansible.builtin.unarchive:
         src: ~/project/artifact.tar.gz
