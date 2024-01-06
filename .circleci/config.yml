@@ -222,7 +222,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - backend/.env
+            - frontend/.env
 
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
