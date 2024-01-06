@@ -10,11 +10,10 @@
     apt update -y
     apt upgrade -y
     apt install curl -y
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
     source ~/.bashrc
-    nvm install --lts
-    nvm alias default 20.04.2
-    apt install npm -y
-    curl -sL https://raw.githubusercontent.com/Unitech/pm2/master/packager/setup.deb.sh | sudo -E bash -
+    nvm install v13.8.0
+    #curl -sL https://raw.githubusercontent.com/Unitech/pm2/master/packager/setup.deb.sh | sudo -E bash -
+    npm install -g pm2
     
 
