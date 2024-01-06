@@ -280,6 +280,7 @@ jobs:
             yum update
             yum install curl
             yum install tar -y
+            yum install gzip -y
       - attach_workspace:
           at: ~/
       - run:
