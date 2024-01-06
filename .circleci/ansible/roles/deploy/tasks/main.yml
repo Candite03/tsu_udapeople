@@ -3,7 +3,6 @@
   ansible.builtin.unarchive:
         src: ~/project/artifact.tar.gz
         dest: /home/ubuntu/
-        remote_src: yes
 - name: Start App
   ansible.builtin.shell: |
     cd /home/ubuntu/
