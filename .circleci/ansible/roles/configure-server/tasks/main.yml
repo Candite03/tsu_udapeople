@@ -3,17 +3,20 @@
   ansible.builtin.apt:
     update_cache: yes
 
-- name: Install nodejs, npm and pm2
-  become: true
-  ansible.builtin.shell: |
-    apt install python3
-    #apt update -y
-    #apt upgrade -y
-    apt install curl -y
-    curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
-    apt install nodejs
-    apt update -y
-    #curl -sL https://raw.githubusercontent.com/Unitech/pm2/master/packager/setup.deb.sh | sudo -E bash -
-    npm install -g pm2
+- name: Install Python 3
+  ansible.builtin.apt:
+    name: python3
+    state: present
+
+- name: Install Node.js
+  ansible.builtin.apt:
+    repository: https://deb.nodesource.com/setup_17.x
+    state: present
+    update_cache: yes
+
+- name: Install npm packages
+  ansible.builtin.npm:
+    name: [pm2]
+    global: yes
     
 
