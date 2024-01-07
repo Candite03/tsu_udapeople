@@ -23,6 +23,28 @@ commands:
             aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
             aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
 
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      WorkflowID:
+        description: "Work flow ID from the pipeline job"
+        type: string
+        default: "${CIRCLE_WORKFLOW_ID:0:7}"     
+    steps:
+      - run:
+          name: Revert migrations
+          when: on_fail
+          command: |
+            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+            SUCCESS = 1
+            if(( $SUCCESS==1 )); 
+            then
+            #  cd ~/project/backend
+            #  npm install
+            #  Add revert code here. You can find this in the Getting Started section.
+              exit 1
+            fi
+
 jobs:
   build-frontend:
     docker:
@@ -318,7 +340,8 @@ jobs:
             else
               return 1
             fi
-      # Here's where you will add some code to rollback on failure 
+      - destroy-environment:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}" 
 
 workflows:
   default:

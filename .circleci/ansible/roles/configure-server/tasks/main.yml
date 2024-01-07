@@ -10,7 +10,7 @@
 
 - name: Install Node.js
   ansible.builtin.apt:
-    repository: https://deb.nodesource.com/setup_17.x
+    repository: https://deb.nodesource.com/setup_17.x | sudo -E bash -
     state: present
     update_cache: yes
 
