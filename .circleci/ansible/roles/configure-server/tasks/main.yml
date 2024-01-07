@@ -9,13 +9,14 @@
     state: present
 
 - name: Install Node.js
-  ansible.builtin.apt:
-    repository: https://deb.nodesource.com/setup_17.x | sudo -E bash -
-    state: present
-    update_cache: yes
+  become: true
+  ansible.builtin.shell: |
+    curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+    apt install nodejs
+    apt update -y
 
 - name: Install npm packages
-  ansible.builtin.npm:
+  npm:
     name: [pm2]
     global: yes
     
