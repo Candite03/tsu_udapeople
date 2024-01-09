@@ -205,6 +205,10 @@ jobs:
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/backend/development.env
       - run:
           name: Send migration results to memstash
           command: |
@@ -330,10 +334,10 @@ jobs:
             else
               return 1
             fi
-      #- destroy-environment:
-          #WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
-      #- revert-migrations:
-          #WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy-environment:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
 
   cloudfront-update:
     docker:
